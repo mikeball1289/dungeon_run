@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "srv_dist",
+        "strictNullChecks": true,
+        "noImplicitAny": true
+    },
+    "include": [
+        "server/**/*.ts",
+        "common/**/*.ts"
+    ]
+}

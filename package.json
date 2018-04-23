@@ -1,0 +1,20 @@
+{
+  "name": "dungeon_run",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.11.1",
+    "@types/seedrandom": "^2.4.27",
+    "@types/socket.io": "^1.4.33",
+    "express": "^4.16.3",
+    "png-js": "^0.1.1",
+    "seedrandom": "^2.4.3",
+    "socket.io": "^2.1.0"
+  }
+}
