@@ -1,4 +1,5 @@
 import { root, juggler } from "./root";
+import { StandardTemplateRoomProvider } from "./providers/StandardTemplateRoomProvider";
 
 async function main() {
     let app = new PIXI.Application( {
@@ -34,8 +35,12 @@ async function main() {
         fpsDisplay.text = fps.toFixed(1);
     } );
 
+    await StandardTemplateRoomProvider.ready();
+
     let socket = io();
-    socket.on("dungeon_params", (params: any) => console.log(params) );
+    socket.on("dungeon_params", (params: DungeonParams) => {
+        
+    } );
 }
 
 window.addEventListener("load", main);

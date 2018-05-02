@@ -11,8 +11,12 @@
         "downlevelIteration": true,
         "experimentalDecorators": true
     },
+    "files": [
+        "../common/types.d.ts"
+    ],
     "include": [
         "src/**/*.ts",
-        "node_modules/@types/**/*.ts"
+        "node_modules/@types/**/*.ts",
+        "../common/**/*.ts"
     ]
 }

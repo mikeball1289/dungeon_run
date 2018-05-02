@@ -7,7 +7,7 @@ export class StandardTemplateRoomProvider {
 
     public static templates: TemplateRoom[];
 
-    public static ready(): Promise<void> {
+    public static async ready(): Promise<void> {
         let p = new Promise<void>( (resolve, reject) => {
             if (this.templates === undefined) {
                 let req = new XMLHttpRequest();

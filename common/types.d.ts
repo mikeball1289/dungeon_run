@@ -1,0 +1,1 @@
+declare type DungeonParams = { seed: number, width: number, height: number };
