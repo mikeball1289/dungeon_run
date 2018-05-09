@@ -1,5 +1,7 @@
 // tslint:disable max-classes-per-file
-import * as Key from "./Key";
+import * as _Key from "./Key";
+
+export const Key = _Key;
 
 class Juggler {
     private enterFrameFunctions: [(() => void), any][] = [];
@@ -134,7 +136,7 @@ class Controller {
                 this.axes = [];
                 return;
             }
-            let gamepad = gps[0];
+            let gamepad = gps[0]!;
             this.buttons = gamepad.buttons.map( (b) => b.pressed );
             this.axes = gamepad.axes;
         } );

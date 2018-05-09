@@ -14,7 +14,7 @@ export class WorldMap {
     public move(actor: Actor): { position: Point, collisions: [number, number] } {
         let collisions: [number, number] = [0, 0];
 
-        let position = actor.position.copy();
+        let position = new Point(actor.left, actor.top);
         let velocity = actor.velocity.copy();
         let xv = velocity.x;
         while (xv !== 0) {

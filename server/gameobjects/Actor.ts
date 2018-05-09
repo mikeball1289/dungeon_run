@@ -2,11 +2,17 @@ import { Point } from "../core/Point";
 
 export class Actor {
 
-    public position = new Point();
     public velocity = new Point();
 
-    constructor(public size: Point = new Point(0, 0)) {
+    constructor(public size = new Point(), public position = new Point()) {
         
+    }
+
+    public serialize() {
+        return {
+            x: this.x,
+            y: this.y,
+        }
     }
 
     public get width() {
@@ -38,45 +44,45 @@ export class Actor {
     }
 
     public get left() {
-        return this.position.x;
+        return this.position.x - this.width / 2;
     }
     public set left(v) {
-        this.position.x = v;
+        this.position.x = v + this.width / 2;
     }
 
     public get right() {
-        return this.position.x + this.size.x;
+        return this.position.x + this.size.x / 2;
     }
     public set right(v) {
-        this.position.x = v - this.size.x;
+        this.position.x = v - this.size.x / 2;
     }
     
     public get top() {
-        return this.position.y;
+        return this.position.y - this.height;
     }
     public set top(v) {
-        this.position.y = v;
+        this.position.y = v + this.height;
     }
     
     public get bottom() {
-        return this.position.y + this.size.y;
+        return this.position.y;
     }
     public set bottom(v) {
-        this.position.y = v - this.size.y;
+        this.position.y = v;
     }
     
     public get horizontalCenter() {
-        return this.position.y + this.size.y / 2;
+        return this.position.x;
     }
     public set horizontalCenter(v) {
-        this.position.y = v - this.size.y / 2;
+        this.position.x = v;
     }
     
     public get verticalCenter() {
-        return this.position.y + this.size.y / 2;
+        return this.position.y - this.size.y / 2;
     }
     public set verticalCenter(v) {
-        this.position.y = v - this.size.y / 2;
+        this.position.y = v + this.size.y / 2;
     }
 
 }

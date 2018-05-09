@@ -4,7 +4,11 @@
         "module": "commonjs",
         "outDir": "srv_dist",
         "strictNullChecks": true,
-        "noImplicitAny": true
+        "noImplicitAny": true,
+        "downlevelIteration": true,
+        "lib": ["es2015", "es2015.iterable"],
+        "inlineSourceMap": true,
+        "inlineSources": true
     },
     "files": [
         "common/types.d.ts"

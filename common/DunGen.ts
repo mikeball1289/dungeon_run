@@ -1,6 +1,7 @@
 import { Map2D } from "./Map2D";
 import { TemplateRoom, Direction } from "./TemplateRoom";
 import * as seedrandom from "seedrandom";
+import { Keys } from "./utils";
 
 export interface DunGenOpts {
     width?: number,
@@ -20,10 +21,6 @@ interface IOpenDoor extends IPoint {
 interface IPoint {
     x: number;
     y: number;
-}
-
-function Keys<T>(obj: T): (keyof T)[] {
-    return Object.keys(obj) as (keyof T)[];
 }
 
 export enum ETiles {
