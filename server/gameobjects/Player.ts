@@ -3,6 +3,8 @@ import { GameState } from "../GameState";
 import { ControlPack } from "../ControlPack";
 import { Actor } from "./Actor";
 import { TILE_SIZE } from "./WorldMap";
+import { Point } from "../core/Point";
+import { ENGINE_METHOD_ECDH } from "constants";
 
 export class Player extends Actor implements DynamicObject<GameState, ControlPack> {
     public tag = "player";
@@ -45,7 +47,17 @@ export class Player extends Actor implements DynamicObject<GameState, ControlPac
         if (move.collisions[1] !== 0) {
             this.velocity.y = 0;
         }
+        let oldPosition = this.position;
         this.position = move.position.offset(this.width / 2, this.height);
+        if (this.climbing && !state.world.isOnLadder(this) && this.velocity.y < 0) {
+            if (!controls.left && !controls.right) {
+                this.position = new Point(oldPosition.x, Math.floor(oldPosition.y / TILE_SIZE) * TILE_SIZE + 1);
+            } else {
+                this.position = new Point(this.position.x, Math.ceil(this.position.y / TILE_SIZE) * TILE_SIZE - 1);
+                this.velocity.y = -8.5;
+                this.climbing = false;
+            }
+        }
         return this;
     }
 
