@@ -26,6 +26,10 @@ class Juggler {
         setTimeout(tick, this.interFrameTime);
     }
 
+    public setFPS(fps: number) {
+        this.interFrameTime = 1000 / fps;
+    }
+
     public add(fn: () => void, context?: any) {
         if (this.has(fn, context) < 0) {
             this.enterFrameFunctions.push([fn, context]);

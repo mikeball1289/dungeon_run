@@ -190,7 +190,7 @@ export function DunGen(templates: TemplateRoom[], opts?: DunGenOpts) {
         }
     }
 
-    return dungeon.map( (t) => t === ETiles.SOLID ? ETiles.WALL : t );
+    return dungeon.map( (t) => t === ETiles.SOLID ? ETiles.WALL : t === ETiles.BOTTOM_DOOR ? ETiles.EMPTY : t);
 }
 
 export class Dungeon {

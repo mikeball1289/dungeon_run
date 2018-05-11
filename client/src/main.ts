@@ -24,6 +24,7 @@ async function main() {
     fpsDisplay.y = app.view.height;
     root.stage.addChild(fpsDisplay);
 
+    juggler.setFPS(70);
     let lastTick = 0;
     juggler.add( () => {
         if (lastTick > 0) {
@@ -31,7 +32,7 @@ async function main() {
             if (!isFinite(fps)) {
                 fps = 1000 / (tick - lastTick);
             } else {
-                fps = fps * 0.99 + (1000 / (tick - lastTick)) * 0.01;
+                fps = fps * 0.99 + (Math.min(1000 / (tick - lastTick), 1000)) * 0.01;
             }
             lastTick = tick;
         } else {
@@ -64,6 +65,8 @@ async function main() {
         } );
 
         let lastUpdate = 0;
+        let stateBufferLength = 2;
+        let states: GameStatePacket[] = [];
         socket.on("state", (s: GameStatePacket) => {
             let updateTime = s.timestamp;
             if (lastUpdate > 0) {
@@ -71,14 +74,20 @@ async function main() {
                 if (!isFinite(tps)) {
                     tps = 1000 / (updateTime - lastUpdate);
                 } else {
-                    tps = tps * 0.99 + (1000 / (updateTime - lastUpdate)) * 0.01;
+                    tps = tps * 0.99 + (Math.min(1000 / (updateTime - lastUpdate), 1000)) * 0.01;
                 }
                 lastUpdate = updateTime;
             } else {
                 lastUpdate = updateTime;
             }
 
-            view.update(s);
+            states.push(s);
+        } );
+        
+        juggler.add( () => {
+            if (states.length > 2) {
+                view.update(states.shift()!);
+            }
         } );
 
         let pingTime = 0;
