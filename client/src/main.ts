@@ -85,7 +85,8 @@ async function main() {
         } );
         
         juggler.add( () => {
-            if (states.length > 2) {
+            if (states.length > 1) {
+                if (states.length > 5) states.slice(-5);
                 view.update(states.shift()!);
             }
         } );
