@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
-        "outDir": "srv_dist",
+        "outDir": "bin",
         "strictNullChecks": true,
         "noImplicitAny": true,
         "downlevelIteration": true,

@@ -66,10 +66,14 @@ export let juggler = new Juggler(60);
 
 class Root {
     private _app: PIXI.Application;
+    private _mouse: PIXI.Point = new PIXI.Point();
 
     public setApp(app: PIXI.Application) {
         if (!this._app) this._app = app;
         else throw new Error("App is already set");
+        window.addEventListener("mousemove", (e) => {
+            this._mouse = new PIXI.Point(e.clientX, e.clientY);
+        } );
     }
 
     get stage(): PIXI.Container {
@@ -80,6 +84,18 @@ class Root {
     get app() {
         if (this._app) return this._app;
         else throw new Error("App is not yet set");
+    }
+
+    get mouse() {
+        if (!this._app) return this._mouse;
+        let view = this._app.view.getBoundingClientRect();
+        let offX = this._mouse.x - view.left;
+        let offY = this._mouse.y - view.top;
+        let scaleX = this._app.screen.width / view.width;
+        let scaleY = this._app.screen.height / view.height;
+        let realX = offX * scaleX;
+        let realY = offY * scaleY;
+        return new PIXI.Point(realX, realY);
     }
 }
 
