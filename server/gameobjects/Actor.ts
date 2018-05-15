@@ -1,6 +1,7 @@
 import { Point } from "../core/Point";
+import { IPoint } from "../../common/types";
 
-export class Actor {
+export abstract class Actor<State extends IPoint = IPoint> {
 
     public velocity = new Point();
 
@@ -8,12 +9,7 @@ export class Actor {
         
     }
 
-    public serialize() {
-        return {
-            x: this.x,
-            y: this.y,
-        }
-    }
+    public abstract serialize(): State;
 
     public get width() {
         return this.size.x;

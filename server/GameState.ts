@@ -6,8 +6,9 @@ import { TemplateRoom } from "../common/TemplateRoom";
 import * as crypto from "crypto";
 import { Point } from "./core/Point";
 import { Keys } from "../common/utils";
+import { GameStatePacket, IPlayersPacket, Controls } from "../common/types";
 
-const emptyControls: Controls = {
+export const emptyControls: Controls = {
     left: false,
     right: false,
     up: false,

@@ -71,6 +71,7 @@ class Root {
     public setApp(app: PIXI.Application) {
         if (!this._app) this._app = app;
         else throw new Error("App is already set");
+        this._mouse = new PIXI.Point(app.view.width / 2, app.view.height / 2);
         window.addEventListener("mousemove", (e) => {
             this._mouse = new PIXI.Point(e.clientX, e.clientY);
         } );

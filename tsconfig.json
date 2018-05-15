@@ -11,7 +11,7 @@
         "inlineSources": true
     },
     "files": [
-        "common/types.d.ts"
+        "common/types.ts"
     ],
     "include": [
         "server/**/*.ts",

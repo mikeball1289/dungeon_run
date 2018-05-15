@@ -4,6 +4,8 @@ import * as express from "express";
 import { GameState } from "./GameState";
 import { DunGenOpts } from "../common/DunGen";
 import { Juggler } from "./core/Juggler";
+import { Controls, IOwnData } from "../common/types";
+import { dataFromSocket } from "../common/utils";
 
 let app = express();
 let server = http.createServer(app);
@@ -14,9 +16,14 @@ app.use(express.static("client/dist"));
 
 let game = new GameState();
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
     const id = socket.id;
     console.log(`Connection recieved ${socket.id}`);
+    
+    socket.on("disconnect", () => {
+        game.removePlayer(id);
+        console.log(`Client disconnected ${id}`);
+    } );
 
     socket.emit("dungeon_params", <DunGenOpts>{
         width: game.world.dungeon.width,
@@ -24,27 +31,29 @@ io.on("connection", (socket) => {
         seed: game.world.dungeon.seed,
     } );
     
-    let ackTimer = setTimeout( () => {
+    // let ackTimer = setTimeout( () => {
+    //     socket.emit("reload");
+    //     socket.disconnect();
+    // }, 2000);
+
+    // socket.on("ack", () => {
+    try {
+        await dataFromSocket(socket, "ack", 2000);
+    } catch(timedout) {
         socket.emit("reload");
         socket.disconnect();
-    }, 2000);
-
-    socket.on("ack", () => {
-        game.addPlayer(id);
+        return;
+    }
+    game.addPlayer(id);
+    socket.emit("own_data", { id: socket.id } as IOwnData);
+        // clearTimeout(ackTimer);
         
-        clearTimeout(ackTimer);
-        
-        socket.on("controls", (controls: Controls) => {
-            game.players[id].controls = controls;
-        } );
-        
-        socket.on("_ping", () => socket.emit("_pong") );
+    socket.on("controls", (controls: Controls) => {
+        game.players[id].controls = controls;
     } );
         
-    socket.on("disconnect", () => {
-        game.removePlayer(id);
-        console.log(`Client disconnected ${id}`);
-    } );
+    socket.on("_ping", () => socket.emit("_pong") );
+    // } );
 } );
 
 let juggler = new Juggler(60);

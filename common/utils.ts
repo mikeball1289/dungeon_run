@@ -24,3 +24,14 @@ export const vennIntersection = <T>(l1: T[], l2: T[], sort?: (a: T, b: T) => num
 }
 
 export const Keys = <T>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[];
+
+interface IOnceable {
+    once: (event: string, fn: Function) => void;
+}
+
+export async function dataFromSocket<Data>(socket: IOnceable, packetName: string, timeout = 1000) {
+    return new Promise<Data>( (resolve, reject) => {
+        let timer = setTimeout(reject, timeout);
+        socket.once(packetName, (data: Data) => (clearTimeout(timer), resolve(data)) );
+    } );
+}
