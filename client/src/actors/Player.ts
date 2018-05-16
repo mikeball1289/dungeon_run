@@ -42,7 +42,7 @@ export class Player extends PIXI.Container {
         this.playerSprite.addChild(this.head);
         this.playerSprite.addChild(this.sword);
 
-        this.playerSprite.pivot.set(275, 300);
+        this.playerSprite.pivot.set(275, 280);
         this.pivot.set(0, 100);
         this.scale.set(0.15);
         this.addChild(this.playerSprite);

@@ -32,7 +32,6 @@ async function main() {
     fpsDisplay.y = app.view.height;
     root.stage.addChild(fpsDisplay);
 
-    juggler.setFPS(70);
     let lastTick = 0;
     juggler.add( () => {
         if (lastTick > 0) {
@@ -84,7 +83,8 @@ async function main() {
     juggler.add( () => {
         if (states.length > 1) {
             if (states.length > 3) states = states.slice(-3);
-            view.update(states.shift()!);
+            if (states.length > 1) states.shift();
+            view.update(states[0]);
         }
         
         socket.emit("controls", <Controls>{
@@ -95,6 +95,7 @@ async function main() {
             jump: keyboard.isKeyDown(Key.SPACE),
         } );
     } );
+
     let pingTime = 0;
     setInterval( () => {
         if (pingTime === 0) {

@@ -4,6 +4,9 @@ import { Keys, vennIntersection } from "../../common/utils";
 import { GameStatePacket, IPlayersPacket } from "../../common/types";
 import { root } from "./root";
 
+const center = new PIXI.Point(1/2, 2/3);
+const signOf = (n: number) => n < 0 ? -1 : 1;
+
 export class GameView extends PIXI.Container {
 
     private playerLayer = new PIXI.Container();
@@ -13,7 +16,7 @@ export class GameView extends PIXI.Container {
         super();
         this.addChild(map);
         this.addChild(this.playerLayer);
-        this.scale.set(5);
+        this.scale.set(4);
     }
 
     public update(state: GameStatePacket) {
@@ -32,10 +35,13 @@ export class GameView extends PIXI.Container {
         for (let id of updated) {
             this.players[id].update(state.players[id]);
         }
-        // let ownPlayer = this.players[this.self];
-        // if (ownPlayer) {
-            // this.x = -ownPlayer.x + root.app.view.width / 2;
-            // this.y = -ownPlayer.y + root.app.view.height / 2;
-        // }
+        let ownPlayer = this.players[this.self];
+        let centerScreen = new PIXI.Point(root.app.view.width * center.x, root.app.view.height * center.y);
+        let dx = centerScreen.x - root.mouse.x;
+        let dy = centerScreen.y - root.mouse.y;
+        if (ownPlayer) {
+            this.x = -ownPlayer.x * this.scale.x + centerScreen.x + Math.pow(dx * dx, 2 / 5) * signOf(dx);
+            this.y = -ownPlayer.y * this.scale.y + centerScreen.y + Math.pow(dy * dy, 2 / 5) * signOf(dy);
+        }
     }
 }

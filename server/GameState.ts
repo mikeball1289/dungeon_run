@@ -25,7 +25,7 @@ export class GameState {
 
     constructor() {
         this.players = {};
-        this.world = new WorldMap(DunGen(templates, { width: 50, height: 50, seed: crypto.randomBytes(24).toString("base64") } ));
+        this.world = new WorldMap(DunGen(templates, { width: 40, height: 40, seed: crypto.randomBytes(24).toString("base64") } ));
         outerloop:
         for (let y = 0; y < this.world.dungeon.height; y ++) {
             for (let x = 0; x < this.world.dungeon.width; x ++) {

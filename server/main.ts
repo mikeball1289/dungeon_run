@@ -31,12 +31,6 @@ io.on("connection", async (socket) => {
         seed: game.world.dungeon.seed,
     } );
     
-    // let ackTimer = setTimeout( () => {
-    //     socket.emit("reload");
-    //     socket.disconnect();
-    // }, 2000);
-
-    // socket.on("ack", () => {
     try {
         await dataFromSocket(socket, "ack", 2000);
     } catch(timedout) {
@@ -46,14 +40,12 @@ io.on("connection", async (socket) => {
     }
     game.addPlayer(id);
     socket.emit("own_data", { id: socket.id } as IOwnData);
-        // clearTimeout(ackTimer);
         
     socket.on("controls", (controls: Controls) => {
         game.players[id].controls = controls;
     } );
         
     socket.on("_ping", () => socket.emit("_pong") );
-    // } );
 } );
 
 let juggler = new Juggler(60);
