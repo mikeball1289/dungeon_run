@@ -87,6 +87,9 @@ async function main() {
             view.update(states[0]);
         }
         
+        let mouse = view.toLocal(root.mouse);
+        console.log(mouse);
+
         socket.emit("controls", <Controls>{
             up: keyboard.isKeyDown(Key.W),
             down: keyboard.isKeyDown(Key.S),

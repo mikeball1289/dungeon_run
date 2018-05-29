@@ -71,11 +71,14 @@ export class WorldMap {
     }
 
     public isOnLadder(actor: Actor): boolean {
-        let center = Math.floor(actor.horizontalCenter / TILE_SIZE);
+        let center = actor.horizontalCenter / TILE_SIZE;
         let top = Math.floor(actor.top / TILE_SIZE);
         let bottom = Math.floor(actor.bottom / TILE_SIZE);
 
-        return (this.dungeon.tiles.get(center, top) === ETiles.LADDER || this.dungeon.tiles.get(center, bottom) === ETiles.LADDER);
+        let xSubpixel = center - Math.floor(center);
+        if (xSubpixel < 0.28 || xSubpixel > 0.72) return false;
+        let intCenter = Math.floor(center);
+        return (this.dungeon.tiles.get(intCenter, top) === ETiles.LADDER || this.dungeon.tiles.get(intCenter, bottom) === ETiles.LADDER);
     }
 
 }

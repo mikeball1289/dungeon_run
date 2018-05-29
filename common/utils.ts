@@ -1,12 +1,12 @@
-export const vennIntersection = <T>(l1: T[], l2: T[], sort?: (a: T, b: T) => number): { l1: T[], l2: T[], both: T[] } => {
-    l1 = l1.slice().sort(sort);
-    l2 = l2.slice().sort(sort);
-    if (!sort) sort = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+export const vennIntersection = <T>(l1: T[], l2: T[], compare?: (a: T, b: T) => number): { l1: T[], l2: T[], both: T[] } => {
+    l1 = l1.slice().sort(compare);
+    l2 = l2.slice().sort(compare);
+    if (!compare) compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;
     let l1elements: T[] = [];
     let l2elements: T[] = [];
     let both: T[] = [];
     while(l1.length && l2.length) {
-        let ord = sort(l1[0], l2[0]);
+        let ord = compare(l1[0], l2[0]);
         if (ord === 0) {
             both.push(l1.shift()!);
             l2.shift();

@@ -2,6 +2,7 @@ import { TemplateRoom } from "../../../common/TemplateRoom";
 import { staticImplements } from "./Decorator";
 import { IProvider } from "./IProvider";
 
+// provider for loading and reading a JSON file as room templates in dungeon construction
 @staticImplements<IProvider>()
 export class StandardTemplateRoomProvider {
 
@@ -16,9 +17,6 @@ export class StandardTemplateRoomProvider {
                     let templates: TemplateRoom[] = JSON.parse(this.responseText).map( (d: number[][]) => new TemplateRoom(d) );
                     StandardTemplateRoomProvider.templates = templates;
                     resolve();
-                    // templates.forEach( (t) => console.log(t.toString()) );
-                    // let dungeon = (window as any).dungeon = DunGen(templates, { height: 100, width: 100 });
-                    // main(dungeon);
                 } );
                 req.addEventListener("error", reject);
                 req.send();

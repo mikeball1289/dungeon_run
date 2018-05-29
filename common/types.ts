@@ -5,6 +5,7 @@ export interface Controls {
     up: boolean;
     down: boolean;
     jump: boolean;
+    target: IPoint;
 }
 
 export interface IPoint {
@@ -27,10 +28,21 @@ export interface IPlayersPacket {
 export interface GameStatePacket {
     timestamp: number;
     players: IPlayersPacket;
+    enemies: IEnemiesPacket;
 }
 
 export enum EMovingDirection {
     NONE,
     LEFT,
     RIGHT,
+}
+
+export interface IEnemyState {
+    tag: string;
+    x: number;
+    y: number;
+}
+
+export interface IEnemiesPacket {
+    [id: string]: IEnemyState;
 }

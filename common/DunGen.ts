@@ -4,15 +4,15 @@ import * as seedrandom from "seedrandom";
 import { Keys } from "./utils";
 
 export interface DunGenOpts {
-    width?: number,
-    height?: number,
-    seed?: string,
+    width?: number;
+    height?: number;
+    seed?: string;
 }
 
 let defaults: DunGenOpts = {
     width: 50,
     height: 50,
-}
+};
 
 interface IOpenDoor extends IPoint {
     direction: Direction;
@@ -109,7 +109,7 @@ export function DunGen(templates: TemplateRoom[], opts?: DunGenOpts) {
             }
         }
     }
-    
+
     dungeon = dungeon.map( (tile, x, y, dungeon) => {
         if (tile === ETiles.SOLID || tile === ETiles.WALL) {
             if (y > 0 && y < dungeon.height - 1) {
@@ -195,6 +195,7 @@ export function DunGen(templates: TemplateRoom[], opts?: DunGenOpts) {
 
 export class Dungeon {
     public tiles = new Map2D<number>();
+
     constructor(public width: number, public height: number, public seed: string, initializer: (x: number, y: number) => number = () => -1) {
         for (let i = 0; i < width; i ++) {
             for (let j = 0; j < height; j ++) {

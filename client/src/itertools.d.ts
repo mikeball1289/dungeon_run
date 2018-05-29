@@ -1,3 +1,4 @@
+// declarations for some helper methods for iterators. Implementation is in itertools.js
 declare function range(from: number, to: number, by?: number): IterableIterator<number>;
 declare function toArray<T>(iter: Iterable<T>): T[];
 declare function enumerate<T>(arr: T[] | Iterable<T>): Iterable<[number, T]>;

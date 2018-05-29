@@ -42,13 +42,13 @@ io.on("connection", async (socket) => {
     socket.emit("own_data", { id: socket.id } as IOwnData);
         
     socket.on("controls", (controls: Controls) => {
-        game.players[id].controls = controls;
+        if (game.players[id]) game.players[id].controls = controls;
     } );
         
     socket.on("_ping", () => socket.emit("_pong") );
 } );
 
-let juggler = new Juggler(60);
+let juggler = new Juggler(30);
 juggler.add( () => {
     game = game.update();
     let serial = game.serialize();

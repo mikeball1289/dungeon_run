@@ -1,18 +1,17 @@
 import { DynamicObject } from "../DynamicObject"
 import { GameState, emptyControls } from "../GameState";
-import { ControlPack } from "../ControlPack";
 import { Actor } from "./Actor";
 import { TILE_SIZE } from "./WorldMap";
 import { Point } from "../core/Point";
 import { ENGINE_METHOD_ECDH } from "constants";
-import { EMovingDirection, IPlayerState } from "../../common/types";
+import { EMovingDirection, IPlayerState, Controls } from "../../common/types";
 
-const GRAVITY = 0.16;
-const WALK_IMPULSE = 1.5;
-const JUMP_POWER = 3.9;
-const CLIMB_SPEED = 1.5;
+const GRAVITY = 0.35;
+const WALK_IMPULSE = 2.5;
+const JUMP_POWER = 6;
+const CLIMB_SPEED = 2.5;
 
-export class Player extends Actor<IPlayerState> implements DynamicObject<GameState, ControlPack> {
+export class Player extends Actor<IPlayerState> implements DynamicObject<GameState, Controls> {
     public tag = "player";
     public grounded = false;
     public climbing = true;
@@ -20,7 +19,7 @@ export class Player extends Actor<IPlayerState> implements DynamicObject<GameSta
     public hasDoubleJump = true;
     public previousControls = emptyControls;
 
-    public update(state: GameState, controls: ControlPack) {
+    public update(state: GameState, controls: Controls) {
         if (this.grounded) this.climbing = false;
         if (this.grounded || this.climbing) this.hasDoubleJump = true;
 
@@ -80,7 +79,7 @@ export class Player extends Actor<IPlayerState> implements DynamicObject<GameSta
         return this;
     }
 
-    private climbingUpdate(state: GameState, controls: ControlPack) {
+    private climbingUpdate(state: GameState, controls: Controls) {
         if (!state.world.isOnLadder(this)) {
             this.climbing = false;
         }

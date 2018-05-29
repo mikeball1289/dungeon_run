@@ -5,8 +5,10 @@ import { staticImplements } from "./Decorator";
 @staticImplements<ITileProvider>()
 export class ClassicTileProvider {
 
+    // cached loaded texture sheet
     public static textureSheet: PIXI.Texture;
 
+    // ready the texture sheet, this can be await'ed
     public static ready(): Promise<void> {
         let p = new Promise<void>( (resolve, reject) => {
             if (!this.textureSheet) {
@@ -23,10 +25,15 @@ export class ClassicTileProvider {
         return p;
     }
 
+    // quick way to synchronously validate provider state
     public static isReady() {
         return this.textureSheet !== undefined;
     }
 
+    // huge mess of logic, give it a dungeon and the tile of that dungeon you
+    // want to get, and it will give you a sprite of that tile
+    // TODO: tiles are always 32x32, make them variable
+    // TODO: maybe some kind of kernel-type pattern matching?
     public static getTile(dungeon: Dungeon, x: number, y: number) {
         let texX = 0;
         let texY = 0;
